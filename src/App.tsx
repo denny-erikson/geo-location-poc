@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useGeolocated } from 'react-geolocated';
 import './App.css';
+import 'leaflet/dist/leaflet.css'
+import { MapStatic } from './components/MapStatic';
+import { pointEnum } from './commons/pointEnum';
 
 function App() {
+  const {
+    coords,
+    isGeolocationAvailable,
+    isGeolocationEnabled
+  } = useGeolocated({
+    positionOptions:{
+      enableHighAccuracy:true,
+
+    },
+    userDecisionTimeout:1000,
+  })
+
+  const points = Object.values(pointEnum) 
+
+
+  if(!isGeolocationAvailable){
+    return <div>Não foi possivel carregar sua localização</div>
+  }
+
+  if(!isGeolocationEnabled){
+    return <div>Localização ativa</div>
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>poc geolocation react-ts</h1>
+      {
+        coords && (
+          <MapStatic 
+            coords={[coords.latitude, coords.longitude]}
+            points={points}
+            />
+        )
+      }
     </div>
   );
 }
