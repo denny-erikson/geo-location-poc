@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Marker, Popup, TileLayer, useMap } from 'react-leaflet';
-import L from 'leaflet';
 import { Point } from "../Point";
 import { markerEnum } from "../../commons/markerEnum";
 
@@ -16,6 +15,7 @@ export const UserMaker:React.FC<MapProps> = ({ center }) => {
 
     useEffect(() => {
         if (center) {
+            console.log('[CENTER POSITION]', center)
             map.setView(center, 16);
         }
     }, [center, map]);
