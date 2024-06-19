@@ -16,7 +16,7 @@ export const UserMaker:React.FC<MapProps> = ({ center }) => {
     useEffect(() => {
         if (center) {
             console.log('[CENTER POSITION]', center)
-            map.setView(center, 16);
+            map.setView(center, 17);
         }
     }, [center, map]);
 

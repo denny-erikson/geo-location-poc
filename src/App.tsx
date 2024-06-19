@@ -23,7 +23,7 @@ function App() {
   const points = Object.values(pointEnum);
   const [lastPosition, setLastPosition] = useState<number[]>([-22.883459, -45.7776131]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const intervalId = setInterval(() => {
       getPosition();
     }, 1000);
@@ -31,7 +31,7 @@ function App() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [getPosition]);
+  }, [getPosition]); */
 
   const currentMemoPosition = useMemo(() => {
     if (coords) {
@@ -59,7 +59,7 @@ function App() {
         {
           currentMemoPosition && (
             <MapStatic 
-              coords={currentMemoPosition}
+              coords={points[0].location}
               points={points}
             />
           )
