@@ -51,15 +51,10 @@ function App() {
   
     return (
       <div className="App">
-        <h1>POC Geolocation React-TS</h1>
-        <CardPosition>
-          <span>LAST: {lastPosition[0]} | {lastPosition[1]}</span>
-          <span>CURRENT: {currentMemoPosition[0]} | {currentMemoPosition[1]}</span>
-        </CardPosition>
         {
           currentMemoPosition && (
             <MapStatic 
-              coords={points[0].location}
+              coords={[-22.833486575651985, -45.777636125781335]}
               points={points}
             />
           )
@@ -68,19 +63,3 @@ function App() {
     );
   }
 export default App;
-
-interface CardPositionProps{
-  type?: "current" | "last"
-}
-export const CardPosition = styled.span<CardPositionProps>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-
-  > span:last-child{
-    color: green;
-    font-weight: bold;
-  }
-`

@@ -1,7 +1,6 @@
 import L from "leaflet";
-import { ReactNode } from "react"
-import styled from "styled-components"
 import IconNavigation from '../../assets/icons/icon-navigation.svg'
+import { CardProfile, Container } from "./styles";
 
 
 const itemMarker = new L.Icon({
@@ -23,78 +22,37 @@ interface PointProps {
 }
 
 export const Point = ({name, category, imageUrl, location, type}: PointProps) =>{
+    const locationString = location?.join(', ') || '';
+    const cleanedLocationString = locationString.replace(/\d{6}$/, '...');
+
+    if(type === "profile") return (
+        <CardProfile>
+            <img src={imageUrl} alt={`${name}`}/>
+            <div>
+                <span>{name}</span>
+                <span>Visitante</span>
+                <span>NR School </span>
+                <div>
+                    <div className="dot"/>
+                    {/* crie um regex para remover o numero de caracteres de location */}                   
+
+                    <span>{cleanedLocationString}</span>
+                </div>
+            </div>
+        </CardProfile>
+    )
     return (
-        <Container>
+        <Container>            
             <img src={imageUrl} alt={`${name}`}/>
             <div>
                 <span>{name}</span>
                 <span>{category}</span>
-                {type==="marker" && <button>
+                 <button>
                     <img src={IconNavigation}/> {` `}
                     Ir para {name}
-                </button>}
+                </button>
             </div>
         </Container>
     )
 }
 
-
-const Container = styled.div`
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-
-    gap: 12px;
-
-    img {
-        width: 56px;
-        height: 56px;
-        border-radius: 46px;
-    }
-
-    > div {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
-
-        span:first-child {
-            font-weight: bold;
-            font-size:14px;
-            color: #1B1D54;
-        }
-
-        span{
-            color: #717178
-        }
-
-        button {
-            all: unset;            
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-
-            padding: 8px 6px;
-
-            color: #2E3190;
-            font-weight: bold;   
-
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 120px;
-            
-            img {
-                margin-top: -5px;
-                transform: rotate(27deg);
-                height:16px;
-                width: 16px;
-                margin-right: 4px;
-                
-            }
-        }
-    }
-
-`

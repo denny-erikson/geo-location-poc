@@ -15,13 +15,12 @@ export const MapStatic = ({coords, points}: MapContainer) => {
         <MapContainer
             style={{height:"100vh", width:"100%"}}
           >
-            <UserMaker center={[latitude, longitude]}/>
             {
               points.map((point)=> { 
                 const [lat, long] = point.location
                 return (
                   <Marker key={point.name} position={[lat, long]} icon={point.icon}>
-                    <Popup>
+                  {point.slug !== "camping" && <Popup>
                       <Point 
                         type='marker'
                         name={point.name}
@@ -29,10 +28,11 @@ export const MapStatic = ({coords, points}: MapContainer) => {
                         imageUrl={point.imageUrl}
                         location={[lat, long]}
                       />
-                    </Popup>
+                    </Popup>}
                   </Marker>
               )})
             }
+            <UserMaker center={[latitude, longitude]}/>
           </MapContainer>
     )
 }
