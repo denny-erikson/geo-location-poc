@@ -5,6 +5,8 @@ import { MapStatic } from './components/MapStatic';
 import { pointEnum } from './commons/pointEnum';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { Modal } from './components/Modal';
+import MovimentIcon from '../src/assets/icons/moviment-icon.svg'
 
 function App() {
   const {
@@ -52,14 +54,62 @@ function App() {
     return (
       <div className="App">
         {
-          currentMemoPosition && (
+          !currentMemoPosition && (
             <MapStatic 
               coords={[-22.833486575651985, -45.777636125781335]}
               points={points}
             />
           )
         }
+
+      <Modal show={true} onClose={()=>{}}>
+        <CardContentModal>
+
+        <h2>HoverBoard</h2>
+        <p>Esse ai é o HoverBoard um brinquedo que você só encontra no NR! Tem coragem de dar o 360°?</p>
+        <hr/>
+
+        <CardDistance>
+          <img src={MovimentIcon} alt='icon'/>
+          <span>A 200 metros, aproximadamente 3 minutos</span>
+        </CardDistance>
+
+        </CardContentModal>
+      </Modal>
       </div>
     );
   }
 export default App;
+
+export const CardContentModal = styled.div`
+
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content: space-between;
+
+  p {
+    text-align: left;
+  }
+
+`
+export const CardDistance = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content: space-around;
+  width: 100%;
+
+  gap: 8px;
+
+  img {
+    width: 22px;
+    height: 22px;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: 300;
+    color:#C6C6D3;
+  }
+`
