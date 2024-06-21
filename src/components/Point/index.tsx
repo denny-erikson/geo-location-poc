@@ -1,6 +1,7 @@
 import L from "leaflet";
 import IconNavigation from '../../assets/icons/icon-navigation.svg'
 import { CardProfile, Container } from "./styles";
+import { useModal } from "../../hooks/useModal";
 
 
 const itemMarker = new L.Icon({
@@ -22,6 +23,7 @@ interface PointProps {
 }
 
 export const Point = ({name, category, imageUrl, location, type}: PointProps) =>{
+    const {isOpen, toggleModal} = useModal()
     const locationString = location?.join(', ') || '';
     const cleanedLocationString = locationString.replace(/\d{6}$/, '...');
 
@@ -47,7 +49,7 @@ export const Point = ({name, category, imageUrl, location, type}: PointProps) =>
             <div>
                 <span>{name}</span>
                 <span>{category}</span>
-                 <button onClick={()=>{}}>
+                 <button onClick={toggleModal}>
                     <img src={IconNavigation}/> {` `}
                     Ir para {name}
                 </button>

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Modal } from './components/Modal';
 import MovimentIcon from '../src/assets/icons/moviment-icon.svg'
 import {ImageSlider} from './components/ImageSlider';
+import { useModal } from './hooks/useModal';
 
 function App() {
   const {
@@ -25,9 +26,7 @@ function App() {
 
   const points = Object.values(pointEnum);
   const [lastPosition, setLastPosition] = useState<number[]>([-22.883459, -45.7776131]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
+  const {isOpen, toggleModal} = useModal()
 
 /*   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -72,9 +71,9 @@ function App() {
           )
         }
 
-      <Modal show={!modalIsOpen} onClose={closeModal}>
+      <Modal show={isOpen} onClose={toggleModal}>
         <CardContentModal>        
-          <ImageSlider images={images} isOpen={modalIsOpen} />
+          <ImageSlider images={images} isOpen={isOpen} />
        
           <div className='detais'>            
             <h2>HoverBoard</h2>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Overlay = styled.div`
@@ -23,6 +23,26 @@ const ModalContainer = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
   overflow-x: hidden;
+
+  opacity: 0;  /* Inicialmente invisível */
+
+  &.fade-in {
+    animation: fadeIn 0.3s forwards;
+  }
+
+  &.fade-out {
+    animation: fadeOut 0.3s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
 `;
 
 const CloseButton = styled.button`
@@ -50,7 +70,7 @@ export const Modal = ({ show, onClose, children }:ModalProps) => {
 
   return (
     <Overlay>
-      <ModalContainer>
+      <ModalContainer className={show?'fade-in': 'fade-out'}>
         <CloseButton onClick={onClose}>X</CloseButton>
         <ModalContent>
           {children}
