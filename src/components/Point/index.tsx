@@ -47,7 +47,7 @@ export const Point = ({name, category, imageUrl, location, type}: PointProps) =>
             <div>
                 <span>{name}</span>
                 <span>{category}</span>
-                 <button>
+                 <button onClick={()=>{}}>
                     <img src={IconNavigation}/> {` `}
                     Ir para {name}
                 </button>

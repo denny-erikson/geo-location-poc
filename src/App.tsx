@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from './components/Modal';
 import MovimentIcon from '../src/assets/icons/moviment-icon.svg'
+import {ImageSlider} from './components/ImageSlider';
 
 function App() {
   const {
@@ -24,6 +25,9 @@ function App() {
 
   const points = Object.values(pointEnum);
   const [lastPosition, setLastPosition] = useState<number[]>([-22.883459, -45.7776131]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
 
 /*   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -51,10 +55,16 @@ function App() {
       return <div>Localização desativada</div>;
     } */
   
+    const images = [
+      points[0].imageUrl,
+      points[0].imageUrl,
+      points[0].imageUrl,
+    ];
+
     return (
       <div className="App">
         {
-          !currentMemoPosition && (
+          currentMemoPosition && (
             <MapStatic 
               coords={[-22.833486575651985, -45.777636125781335]}
               points={points}
@@ -62,17 +72,32 @@ function App() {
           )
         }
 
-      <Modal show={true} onClose={()=>{}}>
-        <CardContentModal>
+      <Modal show={!modalIsOpen} onClose={closeModal}>
+        <CardContentModal>        
+          <ImageSlider images={images} isOpen={modalIsOpen} />
+       
+          <div className='detais'>            
+            <h2>HoverBoard</h2>
+            <p>Esse ai é o HoverBoard um brinquedo que você só encontra no NR! Tem coragem de dar o 360°?</p>
+          </div>
+          <hr/>
 
-        <h2>HoverBoard</h2>
-        <p>Esse ai é o HoverBoard um brinquedo que você só encontra no NR! Tem coragem de dar o 360°?</p>
-        <hr/>
+          <CardDistance>
+            <img src={MovimentIcon} alt='icon'/>
+            <span>A 200 metros, aproximadamente 3 minutos</span>
+          </CardDistance>
 
-        <CardDistance>
-          <img src={MovimentIcon} alt='icon'/>
-          <span>A 200 metros, aproximadamente 3 minutos</span>
-        </CardDistance>
+
+          <ContainerPosition>
+            <div>
+              <MapStatic 
+                type='detail'
+                coords={points[1].location}
+                points={[points[1]]}
+              />
+            </div>
+            <button>Ver rota para HoverBoard</button>
+          </ContainerPosition>
 
         </CardContentModal>
       </Modal>
@@ -81,35 +106,81 @@ function App() {
   }
 export default App;
 
-export const CardContentModal = styled.div`
+export const ContainerPosition = styled.div`
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #B3DAE2;
+    margin-bottom:48px;
 
+    width: 100%;
+    height: 210px;
+
+    margin-top:24px;
+    border-radius: 24px;
+    background-color: #E6F7FB;
+
+    > div {
+      /* position: absolute;
+      top:0;
+      left:0; */
+      width: 100%;
+      height: 160px;
+      border-radius: 24px;
+    }
+
+    > button {
+      all: unset;
+      margin-bottom: 16px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      color: #2E3190;
+    }
+`
+
+export const CardContentModal = styled.div`
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
+  
+    .detais {
+      text-align: left;
+      h2 {
+        font-size: 24px;
+        color:#4F4F54;        
+      }
 
-  p {
-    text-align: left;
-  }
+      p {
+        font-size:14px;
+        text-align: left;
+        margin-top: -8px;
+        color:#9797A1;
+      }
+    }
 
 `
 export const CardDistance = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
-  justify-content: space-around;
+  justify-content: flex-start;
   width: 100%;
 
   gap: 8px;
 
   img {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
   }
 
   span {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     color:#C6C6D3;
+    white-space: nowrap;
   }
 `

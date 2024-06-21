@@ -7,13 +7,24 @@ import { UserMaker } from "../UserMarker";
 interface MapContainer {
   coords: number[]
   points: any[]
+  type?: "detail"
 }
 
-export const MapStatic = ({coords, points}: MapContainer) => {
+export const MapStatic = ({type, coords, points}: MapContainer) => {
     const [latitude, longitude] = coords
+    const styleDetail = {
+      width: "100%",
+      height: "160px",
+      borderRadius: "24px",
+    }
+    const isDetail = type==="detail"
+    const isStyleDetail =  isDetail ? styleDetail : {height:"100vh", width:"100%"}
     return (
         <MapContainer
-            style={{height:"100vh", width:"100%"}}
+            zoomControl={!isDetail}
+            touchZoom={!isDetail}
+            dragging={!isDetail}            
+            style={isStyleDetail}
           >
             {
               points.map((point)=> { 
@@ -32,7 +43,7 @@ export const MapStatic = ({coords, points}: MapContainer) => {
                   </Marker>
               )})
             }
-            <UserMaker center={[latitude, longitude]}/>
+            <UserMaker type={type} center={[latitude, longitude]}/>
           </MapContainer>
     )
 }
